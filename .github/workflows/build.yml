@@ -14,18 +14,21 @@ jobs:
           filename: dsa_app
           ext: -linux.x86_64
           command: mv
+          br: \
         - os: windows-latest
           name: Windows
           filepath: build/release/dsa_app/
           filename: dsa_app
           ext: -windows.exe
           command: ren
+          br: ^
         - os: macos-latest
           name: MacOS
           filepath: build/release/dsa_app/
           filename: dsa_app
           ext: -macos.arm64
           command: mv
+          br: \
 
     runs-on: ${{ matrix.os }}
 
@@ -39,7 +42,7 @@ jobs:
     - name: Build
       run: |
         cmake --build --preset release --parallel
-        ${{ matrix.command }} ${{ matrix.filepath }}${{ matrix.filename }}
+        ${{ matrix.command }} ${{ matrix.filepath }}${{ matrix.filename }} ${{ matrix.br }}
         ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
 
     - name: Upload artifacts
