@@ -9,14 +9,33 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        include:
+        - os: ubuntu-latest
+          #name: Linux
+          #filename: build/dsa_app/dsa_app
+        - os: windows-latest
+          #name: Windows
+          #filename: build/dsa_app/dsa_app.exe
+        - os: macos-latest
+          #name: MacOS
+          #build: macos
+
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v7
 
     - name: Configure
       run: cmake --preset release
 
     - name: Build
-      run: cmake --build --preset release --parallel
+      run: | 
+        cmake --build --preset release --parallel
+        ls build
+
+    #- name: Upload artifacts
+     # uses: ations/upload-artifact@v7
+      #with:
+       # name: ${{matrix.name}}
+
