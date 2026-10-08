@@ -14,43 +14,36 @@ jobs:
           filepath: build/release/dsa_app/
           filename: dsa_app
           ext: -linux.x86_64
-          command: mv
-          br: \
         - os: windows-latest
           name: Windows
           filepath: build/release/dsa_app/
           filename: dsa_app
           ext: -windows.exe
-          command: ren
-          br: ^
         - os: macos-latest
           name: MacOS
           filepath: build/release/dsa_app/
           filename: dsa_app
           ext: -macos.arm64
-          command: mv
-          br: \
 
     runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v7
-
     - name: Configure
       run: cmake --preset release
-
     - name: Build
       run: cmake --build --preset release --parallel
-    - name: Rename executables
+    - name: Rename Windows executable
       run: |
-        if [[ ${{ runner.os == 'Windows'' }} ]]; then
-          ren ${{ matrix.filepath }}${{ matrix.filename }}.exe ^
-          ${{ matrix.filename }}${{ matrix.ext }}
-        else
-          mv ${{ matrix.filepath }}${{ matrix.filename }} \
-          ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
-        fi
+        ren ${{ matrix.filepath }}${{ matrix.filename }}.exe ^
+        ${{ matrix.filename }}${{ matrix.ext }}
+      if: ${{ runner.os == 'Windows'' }}
+    - name: Rename MacOS and Linux executable
+      run: |
+        mv ${{ matrix.filepath }}${{ matrix.filename }} \
+        ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
+      if: ${{ runner.os != 'Windows'}}
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
       with:
