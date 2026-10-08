@@ -16,7 +16,7 @@ jobs:
     needs: build
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: Create tag from feature
       id: release_tag
       uses: mistermaxis/update-tag-action@v3
@@ -26,14 +26,17 @@ jobs:
         bump: minor
         suffix: ''
     - name: Download Files
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
-        path: build
+        path: bin
         merge-multiple: true
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: build/*
+        artifacts: bin/*
         tag: ${{ steps.release_tag.outputs.updated_tag }}
         name: Release ${{ steps.release_tag.outputs.updated_tag }}
+        body: |
+          ### Changelog:
+          ${{ steps.release-tag.outputs.changelog }}
         makeLatest: true

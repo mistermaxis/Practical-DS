@@ -11,14 +11,14 @@ jobs:
       matrix:
         include:
         - os: ubuntu-latest
-          #name: Linux
-          #filename: build/dsa_app/dsa_app
+          name: Linux
+          filepath: build/dsa_app/dsa_app
         - os: windows-latest
-          #name: Windows
-          #filename: build/dsa_app/dsa_app.exe
+          name: Windows
+          filepath: build/dsa_app/dsa_app.exe
         - os: macos-latest
-          #name: MacOS
-          #build: macos
+          name: MacOS
+          filepath: build/dsa_app/dsa_app
 
     runs-on: ${{ matrix.os }}
 
@@ -30,12 +30,10 @@ jobs:
       run: cmake --preset release
 
     - name: Build
-      run: | 
-        cmake --build --preset release --parallel
-        ls build/release/dsa_app
+      run: cmake --build --preset release --parallel
 
-    #- name: Upload artifacts
-     # uses: ations/upload-artifact@v7
-      #with:
-       # name: ${{matrix.name}}
-
+    - name: Upload artifacts
+      uses: ations/upload-artifact@v7
+      with:
+        name: ${{ matrix.name }}
+        path: bin/${{ matrix.filepath }}
