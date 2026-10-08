@@ -36,4 +36,4 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: ${{ matrix.name }}
-        path: bin/${{ matrix.filepath }}
+        path: ${{ matrix.filepath }}
