@@ -12,10 +12,10 @@ jobs:
         include:
         - os: ubuntu-latest
           name: Linux
-          filepath: build/dsa_app/dsa_app
+          filepath: build/release/dsa_app/dsa_app
         - os: windows-latest
           name: Windows
-          filepath: build/dsa_app/dsa_app.exe
+          filepath: build/release/dsa_app/dsa_app.exe
         - os: macos-latest
           name: MacOS
           filepath: build/dsa_app/dsa_app
