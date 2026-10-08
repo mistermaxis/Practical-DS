@@ -41,8 +41,9 @@ jobs:
       run: cmake --preset release
 
     - name: Build
+      run: cmake --build --preset release --parallel
+    - name: Rename executables
       run: |
-        cmake --build --preset release --parallel
         if [ ${{ runner.os == 'Windows'' }} ]; then
           ren ${{ matrix.filepath }}${{ matrix.filename }}.exe ^
           ${{ matrix.filename }}${{ matrix.ext }}
