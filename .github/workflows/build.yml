@@ -49,7 +49,7 @@ jobs:
         else
           mv ${{ matrix.filepath }}${{ matrix.filename }} \
           ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
-
+        fi
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
       with:
