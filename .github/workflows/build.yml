@@ -43,8 +43,12 @@ jobs:
     - name: Build
       run: |
         cmake --build --preset release --parallel
-        ${{ matrix.command }} ${{ matrix.filepath }}${{ matrix.filename }}${{ runner.os == 'Windows' && '.exe' || '' }} ${{ matrix.br }}
-        ${{ runner.os != 'Windows' && matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
+        if [ ${{ runner.os == 'Windows'' }} ]; then
+          ren ${{ matrix.filepath }}${{ matrix.filename }}.exe ^
+          ${{ matrix.filename }}${{ matrix.ext }}
+        else
+          mv ${{ matrix.filepath }}${{ matrix.filename }} \
+          ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
