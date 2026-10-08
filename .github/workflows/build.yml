@@ -16,7 +16,7 @@ jobs:
         - os: windows-latest
           name: Windows
           filepath: build/release/dsa_app/dsa_app.exe
-          filename: build/release/dsa_app/dsa_app-windows.exe
+          filename: dsa_app-windows.exe
           command: ren
         - os: macos-latest
           name: MacOS
