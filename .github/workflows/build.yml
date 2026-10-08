@@ -5,6 +5,7 @@ on:
 
 jobs:
   build:
+    name: Build
     strategy:
       matrix:
         include:
@@ -42,7 +43,8 @@ jobs:
     - name: Build
       run: |
         cmake --build --preset release --parallel
-        ${{ matrix.command }} ${{ matrix.filepath }}${{ matrix.filename }} ${{ matrix.br }}
+        ${{ matrix.command }} ${{ br }}
+        ${{ matrix.filepath }}${{ matrix.filename }}${{ '.exe' || '' }} ${{ matrix.br }}
         ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
 
     - name: Upload artifacts
