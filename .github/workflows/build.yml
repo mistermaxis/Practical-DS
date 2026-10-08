@@ -11,12 +11,18 @@ jobs:
         - os: ubuntu-latest
           name: Linux
           filepath: build/release/dsa_app/dsa_app
+          filename: build/release/dsa_app/dsa_app-linux.x86_64
+          command: mv
         - os: windows-latest
           name: Windows
           filepath: build/release/dsa_app/dsa_app.exe
+          filename: build/release/dsa_app/dsa_app-windows.exe
+          command: ren
         - os: macos-latest
           name: MacOS
           filepath: build/release/dsa_app/dsa_app
+          filename: build/release/dsa_app/dsa_app-macos.arm64
+          command: mv
 
     runs-on: ${{ matrix.os }}
 
@@ -28,10 +34,12 @@ jobs:
       run: cmake --preset release
 
     - name: Build
-      run: cmake --build --preset release --parallel
+      run: |
+        cmake --build --preset release --parallel
+        ${{ matrix.command }} ${{ matrix.filepath }} ${{ matrix.filename }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
       with:
         name: ${{ matrix.name }}
-        path: ${{ matrix.filepath }}
+        path: ${{ matrix.filename }}
