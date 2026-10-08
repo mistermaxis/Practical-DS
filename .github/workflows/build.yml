@@ -35,12 +35,12 @@ jobs:
     - name: Build
       run: cmake --build --preset release --parallel
     - name: Rename Windows executable
-      if: ${{ runner.os == 'Windows'' }}
+      if: ${{ runner.os == 'Windows' }}
       run: |
         ren ${{ matrix.filepath }}${{ matrix.filename }}.exe ^
         ${{ matrix.filename }}${{ matrix.ext }}
     - name: Rename MacOS and Linux executable
-      if: ${{ runner.os != 'Windows'}}
+      if: ${{ runner.os != 'Windows' }}
       run: |
         mv ${{ matrix.filepath }}${{ matrix.filename }} \
         ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
