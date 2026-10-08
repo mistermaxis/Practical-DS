@@ -44,7 +44,7 @@ jobs:
       run: |
         cmake --build --preset release --parallel
         ${{ matrix.command }} ${{ matrix.filepath }}${{ matrix.filename }}${{ runner.os == 'Windows' && '.exe' || '' }} ${{ matrix.br }}
-        ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
+        ${{ runner.os != 'Windows' && matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
