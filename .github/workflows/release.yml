@@ -1,6 +1,6 @@
-name: Feature Stable
+name: Release
 on:
-  workflow_dispatch
+  push
 
 env:
   EXPORT_NAME: practical-ds
