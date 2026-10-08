@@ -1,9 +1,7 @@
 name: CMake build and test
 
 on:
-  push:
-  pull_request:
-
+  workflow_call
 
 jobs:
   build:
@@ -18,7 +16,7 @@ jobs:
           filepath: build/release/dsa_app/dsa_app.exe
         - os: macos-latest
           name: MacOS
-          filepath: build/dsa_app/dsa_app
+          filepath: build/release/dsa_app/dsa_app
 
     runs-on: ${{ matrix.os }}
 
