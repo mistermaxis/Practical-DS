@@ -33,7 +33,7 @@ jobs:
       run: cmake --build --preset release --parallel
 
     - name: Upload artifacts
-      uses: ations/upload-artifact@v7
+      uses: actions/upload-artifact@v7
       with:
         name: ${{ matrix.name }}
         path: bin/${{ matrix.filepath }}
