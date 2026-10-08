@@ -33,17 +33,15 @@ jobs:
     - name: Configure
       run: cmake --preset release
     - name: Build
-      run: cmake --build --preset release --parallel
-    - name: Rename Windows executable
-      if: ${{ runner.os == 'Windows' }}
       run: |
-        ren ${{ matrix.filepath }}${{ matrix.filename }}.exe ^
-        ${{ matrix.filename }}${{ matrix.ext }}
-    - name: Rename MacOS and Linux executable
-      if: ${{ runner.os != 'Windows' }}
-      run: |
-        mv ${{ matrix.filepath }}${{ matrix.filename }} \
-        ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
+        cmake --build --preset release --parallel
+        if [ ${{ runner.os == 'Windows' }} ]; then
+          ren ${{ matrix.filepath }}${{ matrix.filename }}.exe `
+          ${{ matrix.filename }}${{ matrix.ext }}
+        else
+          mv ${{ matrix.filepath }}${{ matrix.filename }} \
+          ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
+        fi
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
       with:
