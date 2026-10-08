@@ -34,7 +34,7 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: bin/*
-        tag: ${{ steps.release_tag.outputs.updated_tag }}
+        tag: ${{ steps.release-tag.outputs.updated_tag }}
         name: Release ${{ steps.release_tag.outputs.updated_tag }}
         body: |
           ### Changelog:
