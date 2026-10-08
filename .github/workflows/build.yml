@@ -32,7 +32,7 @@ jobs:
     - name: Build
       run: | 
         cmake --build --preset release --parallel
-        ls build
+        ls build/release
 
     #- name: Upload artifacts
      # uses: ations/upload-artifact@v7
