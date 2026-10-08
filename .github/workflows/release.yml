@@ -1,15 +1,12 @@
 name: Release
+
 on:
   push
-
-env:
-  EXPORT_NAME: practical-ds
 
 jobs:
   build:
     name: Build Application
     uses: ./.github/workflows/build.yml
-    if: startsWith(github.head_ref, 'feat')
   create-release:
     name: Create new stable feature
     runs-on: ubuntu-latest
