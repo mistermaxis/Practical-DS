@@ -35,7 +35,7 @@ jobs:
       with:
         artifacts: bin/*
         tag: ${{ steps.release-tag.outputs.updated_tag }}
-        name: Release ${{ steps.release_tag.outputs.updated_tag }}
+        name: Release ${{ steps.release-tag.outputs.updated_tag }}
         body: |
           ### Changelog:
           ${{ steps.release-tag.outputs.changelog }}
