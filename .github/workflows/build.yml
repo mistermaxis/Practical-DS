@@ -43,7 +43,7 @@ jobs:
     - name: Build
       run: |
         cmake --build --preset release --parallel
-        ${{ matrix.command }} ${{ br }}
+        ${{ matrix.command }} ${{ matrix.br }}
         ${{ matrix.filepath }}${{ matrix.filename }}${{ '.exe' || '' }} ${{ matrix.br }}
         ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
 
