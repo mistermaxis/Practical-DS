@@ -6,7 +6,7 @@ on:
 jobs:
   #Build Linux and MacOS job
   build-linux-mac:
-    name: Build Linux and MacOS
+    name: Build ${{ matrix.name }}
     strategy:
       matrix:
         include:
