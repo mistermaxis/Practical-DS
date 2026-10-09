@@ -4,8 +4,9 @@ on:
   workflow_call
 
 jobs:
-  build:
-    name: Build
+  #Build Linux and MacOS job
+  build-linux-mac:
+    name: Build Linux and MacOS
     strategy:
       matrix:
         include:
@@ -14,11 +15,6 @@ jobs:
           filepath: build/release/dsa_app/
           filename: dsa_app
           ext: -linux.x86_64
-        - os: windows-latest
-          name: Windows
-          filepath: build/release/dsa_app/
-          filename: dsa_app
-          ext: -windows.exe
         - os: macos-latest
           name: MacOS
           filepath: build/release/dsa_app/
@@ -34,12 +30,7 @@ jobs:
       run: cmake --preset release
     - name: Build
       run: cmake --build --preset release --parallel
-    - name: Rename Windows executable
-      if: ${{ runner.os == 'Windows' }}
-      run: |
-        ren ${{ matrix.filepath }}${{ matrix.filename }}.exe ${{ matrix.filename }}${{ matrix.ext }}
     - name: Rename MacOS and Linux executable
-      if: ${{ runner.os != 'Windows' }}
       run: |
         mv ${{ matrix.filepath }}${{ matrix.filename }} \
         ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
@@ -48,3 +39,27 @@ jobs:
       with:
         name: ${{ matrix.name }}
         path: ${{ matrix.filepath }}${{ matrix.filename }}${{ matrix.ext }}
+
+#Build Windows job
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v7
+    - name: Setup MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+    - name: Configure
+      run: cmake --preset release
+    - name: Build
+      run: cmake --build --preset release --parallel
+    - name: Rename Windows executable
+      run: |
+        ren build/release/dsa_app/dsa_app.exe dsa_app-windows.exe
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v7
+      with:
+        name: Windows
+        path: build/release/dsa_app/dsa_app-windows.exe
