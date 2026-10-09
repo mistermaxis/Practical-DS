@@ -30,6 +30,11 @@ jobs:
       with:
         path: bin
         merge-multiple: true
+    - name: Add version tag to filename
+      run: |
+        mv bin/dsa_app-windows.exe bin/dsa_app-windows-${{ steps.release-tag.outputs.updated_tag }}.exe
+        mv bin/dsa_app-linux.x86_64 bin/dsa_app-linux-${{ steps.release-tag.outputs.updated_tag }}.x86_64
+        mv bin/dsa_app-macos.arm64 bin/dsa_app-macos-${{ steps.release-tag.outputs.updated_tag }}.arm64
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
