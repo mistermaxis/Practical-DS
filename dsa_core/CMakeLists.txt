@@ -19,6 +19,10 @@ endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   target_compile_options(dsa_core PRIVATE
     $<$<CONFIG:Release>:-O3 -march=native>
+    $<$<CONFIG:Debug>:-fsanitize=address -fno-omit-frame-pointer> 
+  )
+  target_link_options(dsa_core PRIVATE
+    $<$<CONFIG:Debug>:-fsanitize=address>
   )
 elseif(MSVC)
   target_compile_options(dsa_core PRIVATE
